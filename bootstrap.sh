@@ -6,9 +6,10 @@ kind create cluster --name akuity
 echo "Creating ArgoCD namespace..."
 kubectl create namespace argocd
 
-# Wait, then kubectl apply ArgoCD, separate dir for Applications?
+# Initial bootstrapping installation of ArgoCD.
+# SSA is needed here due to the size of CRDs being installed
 echo "Installing ArgoCD..."
-kubectl apply -n argocd -f manifests/argo-cd/manifest.yaml
+kubectl apply -n argocd --server-side --force-conflicts -f manifests/argo-cd/manifest.yaml
 
 # TODO: maybe move app-of-apps.yaml into manifests/ for organization?
 echo "Initializing app of apps..."
