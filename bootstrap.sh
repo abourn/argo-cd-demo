@@ -1,6 +1,6 @@
 #!/bin/bash
 echo "Creating cluster..."
-kind create cluster --name akuity
+kind create cluster --name demo
 
 # Create ArgoCD namespace manually, as the Helm Chart does not render Namespace manifest
 echo "Creating ArgoCD namespace..."

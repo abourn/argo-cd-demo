@@ -19,3 +19,6 @@ For Bonuses:
 
 # Upgrading ArgoCD Chart
 Helm pull... > charts/argo-cd
+
+# Teardown
+kind delete clusters demo
