@@ -14,3 +14,6 @@ spec:
     path: argo-cd-apps/
     repoURL: https://github.com/abourn/argo-cd-demo.git
     targetRevision: HEAD
+  syncPolicy:
+    automated:        
+      enabled: true
