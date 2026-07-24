@@ -6,14 +6,14 @@ kind create cluster --name demo
 echo "Creating ArgoCD namespace..."
 kubectl create namespace argocd
 
-echo "\n"
+echo -e "\n"
 
 # Initial bootstrapping installation of ArgoCD.
 # SSA is needed here due to the size of CRDs being installed
 echo "Installing ArgoCD..."
 kubectl apply -n argocd --server-side --force-conflicts -f manifests/argo-cd/manifest.yaml
 
-echo "\n"
+echo -e "\n"
 
 # TODO: maybe move app-of-apps.yaml into manifests/ for organization?
 echo "Initializing app of apps..."
