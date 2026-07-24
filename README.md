@@ -10,6 +10,8 @@
 ApplicationSet for guestbook to demonstrate multiple environments (make sure to -CreateNamespace=true or add to helm chart)
 Kubectl-slice?
 
+Can app of apps be managed with git itself?
+
 For Bonuses:
 - Install ArgoCD in HA
 - Secrets Management example?

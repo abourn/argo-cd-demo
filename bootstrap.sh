@@ -15,6 +15,5 @@ kubectl apply -n argocd --server-side --force-conflicts -f manifests/argo-cd/man
 
 echo -e "\n"
 
-# TODO: maybe move app-of-apps.yaml into manifests/ for organization?
 echo "Initializing app of apps..."
-kubectl apply -n argocd -f app-of-apps.yaml
+kubectl apply -n argocd -f argo-cd-apps/app-of-apps/Application.yaml
