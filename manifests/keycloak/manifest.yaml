@@ -111,6 +111,11 @@ spec:
             runAsUser: 1000
           image: "quay.io/keycloak/keycloak:26.6.4"
           imagePullPolicy: IfNotPresent
+          command:
+            - /opt/keycloak/bin/kc.sh
+            - start
+            - --http-port=8080
+            - --hostname-strict=false
           env:
             - name: KC_HTTP_RELATIVE_PATH
               value: /auth
@@ -126,6 +131,14 @@ spec:
               value: "true"
             - name: KC_HEALTH_ENABLED
               value: "true"
+            - name: KEYCLOAK_ADMIN
+              value: admin
+            - name: KEYCLOAK_ADMIN_PASSWORD
+              value: admin
+            - name: JAVA_OPTS_APPEND
+              value: >-
+                -Djgroups.dns.query=keycloak-keycloakx-headless
+            
           envFrom:
           ports:
             - name: http
