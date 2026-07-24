@@ -9,6 +9,8 @@ spec:
     server: https://kubernetes.default.svc
   project: default
   source:
+    directory:
+      recurse: true
     path: argo-cd-apps/
     repoURL: https://github.com/abourn/argo-cd-demo.git
     targetRevision: HEAD
