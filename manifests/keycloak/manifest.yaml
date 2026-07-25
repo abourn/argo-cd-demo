@@ -221,6 +221,7 @@ spec:
             - start
             - --http-port=8080
             - --hostname-strict=false
+            - --import-realm
           env:
             - name: KC_HTTP_RELATIVE_PATH
               value: /auth
