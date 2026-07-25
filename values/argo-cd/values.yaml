@@ -1,13 +1,16 @@
 global:
   addPrometheusAnnotations: true
-  domain: localhost:8080
+  domain: argocd.local
 
 configs:
+  params:
+    server.insecure: true
+  
   cm:
     # OIDC configuration for Keycloak
     oidc.config: |
       name: Keycloak
-      issuer: http://keycloak-keycloakx-http.keycloak.svc.cluster.local/auth/realms/argocd
+      issuer: http://keycloak.local/auth/realms/argocd
       clientID: argocd
       clientSecret: $oidc.keycloak.clientSecret
       requestedScopes: ["openid", "profile", "email", "groups"]
@@ -25,12 +28,6 @@ configs:
       g, argocd-dev, role:readonly
       
     policy.default: role:readonly
-  
-  
-
-server:
-  ingress:
-    enabled: false
 
 controller:
   metrics:
@@ -41,6 +38,9 @@ repoServer:
     enabled: true
 
 server:
+  ingress:
+    enabled: true    
+    ingressClassName: contour
   metrics:
     enabled: true
 

@@ -396,7 +396,7 @@ data:
   exec.enabled: "false"
   oidc.config: |
     name: Keycloak
-    issuer: http://keycloak-keycloakx-http.keycloak.svc.cluster.local/auth/realms/argocd
+    issuer: http://keycloak.local/auth/realms/argocd
     clientID: argocd
     clientSecret: $oidc.keycloak.clientSecret
     requestedScopes: ["openid", "profile", "email", "groups"]
@@ -498,7 +498,7 @@ data:
   timeout.hard.reconciliation: 0s
   timeout.reconciliation: 120s
   timeout.reconciliation.jitter: 60s
-  url: https://localhost:8080
+  url: https://argocd.local
 
 ---
 # Source: argo-cd/templates/argocd-configs/argocd-cmd-params-cm.yaml
@@ -533,6 +533,7 @@ data:
   reposerver.log.level: info
   server.dex.server: https://argocd-dex-server:5556
   server.dex.server.strict.tls: "false"
+  server.insecure: "true"
   server.log.format: text
   server.log.level: info
   server.repo.server.strict.tls: "false"
@@ -569,7 +570,7 @@ metadata:
     app.kubernetes.io/version: "v3.4.5"
 data:
   context: |
-    argocdUrl: https://localhost:8080
+    argocdUrl: https://argocd.local
 
 ---
 # Source: argo-cd/templates/argocd-configs/argocd-rbac-cm.yaml
@@ -32252,7 +32253,7 @@ spec:
   template:
     metadata:
       annotations:
-        checksum/cmd-params: 99bd0968d55608c848007c89ff0e0f1ddebd8834b5d08d53d67c5ff38ab46d46
+        checksum/cmd-params: 50443e82a3e5d1d6725a08f37d8d394ca0568f6a742199b86e6b428229293987
       labels:
         helm.sh/chart: argo-cd-10.1.4
         app.kubernetes.io/name: argocd-applicationset-controller
@@ -32549,7 +32550,7 @@ spec:
   template:
     metadata:
       annotations:
-        checksum/cmd-params: 99bd0968d55608c848007c89ff0e0f1ddebd8834b5d08d53d67c5ff38ab46d46
+        checksum/cmd-params: 50443e82a3e5d1d6725a08f37d8d394ca0568f6a742199b86e6b428229293987
       labels:
         helm.sh/chart: argo-cd-10.1.4
         app.kubernetes.io/name: argocd-notifications-controller
@@ -32683,8 +32684,8 @@ spec:
   template:
     metadata:
       annotations:
-        checksum/cmd-params: 99bd0968d55608c848007c89ff0e0f1ddebd8834b5d08d53d67c5ff38ab46d46
-        checksum/cm: c053466f6e9eb3e0d9d22c75e2df85f430685ac5f16ccbf5c6d772992fd82828
+        checksum/cmd-params: 50443e82a3e5d1d6725a08f37d8d394ca0568f6a742199b86e6b428229293987
+        checksum/cm: 03b5155cf0abf6c1834ae1bca2606b2579857a9c59f860a088e09aca521b145c
       labels:
         helm.sh/chart: argo-cd-10.1.4
         app.kubernetes.io/name: argocd-repo-server
@@ -33111,8 +33112,8 @@ spec:
   template:
     metadata:
       annotations:
-        checksum/cmd-params: 99bd0968d55608c848007c89ff0e0f1ddebd8834b5d08d53d67c5ff38ab46d46
-        checksum/cm: c053466f6e9eb3e0d9d22c75e2df85f430685ac5f16ccbf5c6d772992fd82828
+        checksum/cmd-params: 50443e82a3e5d1d6725a08f37d8d394ca0568f6a742199b86e6b428229293987
+        checksum/cm: 03b5155cf0abf6c1834ae1bca2606b2579857a9c59f860a088e09aca521b145c
       labels:
         helm.sh/chart: argo-cd-10.1.4
         app.kubernetes.io/name: argocd-server
@@ -33575,7 +33576,7 @@ spec:
   template:
     metadata:
       annotations:
-        checksum/cmd-params: 99bd0968d55608c848007c89ff0e0f1ddebd8834b5d08d53d67c5ff38ab46d46
+        checksum/cmd-params: 50443e82a3e5d1d6725a08f37d8d394ca0568f6a742199b86e6b428229293987
       labels:
         helm.sh/chart: argo-cd-10.1.4
         app.kubernetes.io/name: argocd-dex-server
@@ -33820,8 +33821,8 @@ spec:
   template:
     metadata:
       annotations:
-        checksum/cmd-params: 99bd0968d55608c848007c89ff0e0f1ddebd8834b5d08d53d67c5ff38ab46d46
-        checksum/cm: c053466f6e9eb3e0d9d22c75e2df85f430685ac5f16ccbf5c6d772992fd82828
+        checksum/cmd-params: 50443e82a3e5d1d6725a08f37d8d394ca0568f6a742199b86e6b428229293987
+        checksum/cm: 03b5155cf0abf6c1834ae1bca2606b2579857a9c59f860a088e09aca521b145c
       labels:
         helm.sh/chart: argo-cd-10.1.4
         app.kubernetes.io/name: argocd-application-controller
@@ -34193,6 +34194,35 @@ spec:
           - key: controller.profile.enabled
             path: profiler.enabled
       dnsPolicy: ClusterFirst
+
+---
+# Source: argo-cd/templates/argocd-server/ingress.yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: argocd-server
+  namespace: argocd
+  labels:
+    helm.sh/chart: argo-cd-10.1.4
+    app.kubernetes.io/name: argocd-server
+    app.kubernetes.io/instance: argocd
+    app.kubernetes.io/component: server
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/part-of: argocd
+    app.kubernetes.io/version: "v3.4.5"
+spec:
+  ingressClassName: contour
+  rules:
+    - host: argocd.local
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: argocd-server
+                port:
+                  number: 80
 ---
 # Source: argo-cd/templates/redis-secret-init/serviceaccount.yaml
 apiVersion: v1

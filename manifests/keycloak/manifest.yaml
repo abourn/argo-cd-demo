@@ -73,10 +73,10 @@ data:
           "clientAuthenticatorType": "client-secret",
           "secret": "CHANGE_ME_TO_SECURE_SECRET",
           "redirectUris": [
-            "http://localhost:8080/auth/callback"
+            "http://argocd.local/auth/callback"
           ],
           "webOrigins": [
-            "http://localhost:8080"
+            "http://argocd.local"
           ],
           "publicClient": false,
           "standardFlowEnabled": true,
@@ -219,7 +219,6 @@ spec:
             - /opt/keycloak/bin/kc.sh
             - start
             - --http-port=8080
-            - --hostname-strict=false
             - --import-realm
           env:
             - name: KC_HTTP_RELATIVE_PATH
@@ -235,6 +234,10 @@ spec:
             - name: KC_METRICS_ENABLED
               value: "true"
             - name: KC_HEALTH_ENABLED
+              value: "true"
+            - name: KC_HOSTNAME
+              value: keycloak.local
+            - name: KC_HOSTNAME_STRICT
               value: "true"
             - name: KEYCLOAK_ADMIN
               value: admin
@@ -325,3 +328,31 @@ spec:
         - name: realm-config
           configMap:
             name: keycloak-realm
+        
+
+---
+# Source: keycloakx/templates/ingress.yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: keycloak-keycloakx
+  namespace: keycloak
+  labels:
+    helm.sh/chart: keycloakx-7.2.2
+    app.kubernetes.io/name: keycloakx
+    app.kubernetes.io/instance: keycloak
+    app.kubernetes.io/version: "26.6.4"
+    app.kubernetes.io/managed-by: Helm
+spec:
+  ingressClassName: contour
+  rules:
+    - host: "keycloak.local"
+      http:
+        paths:
+          - path: "/auth/"
+            pathType: Prefix
+            backend:
+              service:
+                name: keycloak-keycloakx-http
+                port:
+                  name: http

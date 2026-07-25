@@ -2,10 +2,23 @@ command:
   - "/opt/keycloak/bin/kc.sh"
   - "start"
   - "--http-port=8080"
-  - "--hostname-strict=false"
   - "--import-realm"
 
+ingress:
+  enabled: true
+  ingressClassName: "contour"
+  rules:
+  -
+    host: "keycloak.local"
+    paths:
+      - path: '{{ tpl .Values.http.relativePath $ | trimSuffix "/" }}/'
+        pathType: Prefix
+
 extraEnv: |
+  - name: KC_HOSTNAME
+    value: keycloak.local
+  - name: KC_HOSTNAME_STRICT
+    value: "true"
   - name: KEYCLOAK_ADMIN
     value: admin
   - name: KEYCLOAK_ADMIN_PASSWORD
@@ -84,10 +97,10 @@ extraManifests:
                 "clientAuthenticatorType": "client-secret",
                 "secret": "CHANGE_ME_TO_SECURE_SECRET",
                 "redirectUris": [
-                  "http://localhost:8080/auth/callback"
+                  "http://argocd.local/auth/callback"
                 ],
                 "webOrigins": [
-                  "http://localhost:8080"
+                  "http://argocd.local"
                 ],
                 "publicClient": false,
                 "standardFlowEnabled": true,
