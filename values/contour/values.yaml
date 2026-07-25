@@ -1,0 +1,3 @@
+envoy:
+  service:
+    ip: 10.96.200.1
