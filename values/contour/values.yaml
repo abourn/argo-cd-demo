@@ -3,3 +3,6 @@ envoy:
     type: ClusterIP
     clusterIP: 10.96.200.1
     externalTrafficPolicy: null
+  useHostPort:
+    http: true
+    https: true
