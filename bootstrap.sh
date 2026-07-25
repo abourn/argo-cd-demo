@@ -2,6 +2,14 @@
 echo "Creating cluster..."
 kind create cluster --config cluster/kind-cluster.yaml --name demo
 
+echo -e "\n"
+
+echo "Applying custom CoreDNS config..."
+kubectl apply -f cluster/coredns-cm.yaml
+kubectl -n kube-system rollout restart deployment coredns
+
+echo -e "\n"
+
 # Create ArgoCD namespace manually, as the Helm Chart does not render Namespace manifest
 echo "Creating ArgoCD namespace..."
 kubectl create namespace argocd
