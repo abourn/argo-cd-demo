@@ -136,6 +136,65 @@ extraManifests:
                     }
                   }
                 ]
+              },
+              {
+                "name": "openid",
+                "protocol": "openid-connect",
+                "protocolMappers": []
+              },
+              {
+                "name": "profile",
+                "protocol": "openid-connect",
+                "protocolMappers": [
+                  {
+                    "name": "username",
+                    "protocol": "openid-connect",
+                    "protocolMapper": "oidc-usermodel-property-mapper",
+                    "config": {
+                      "userinfo.token.claim": "true",
+                      "user.attribute": "username",
+                      "id.token.claim": "true",
+                      "access.token.claim": "true",
+                      "claim.name": "preferred_username"
+                    }
+                  }
+                ]
+              },
+              {
+                "name": "email",
+                "protocol": "openid-connect",
+                "protocolMappers": [
+                  {
+                    "name": "email",
+                    "protocol": "openid-connect",
+                    "protocolMapper": "oidc-usermodel-property-mapper",
+                    "config": {
+                      "userinfo.token.claim": "true",
+                      "user.attribute": "email",
+                      "id.token.claim": "true",
+                      "access.token.claim": "true",
+                      "claim.name": "email"
+                    }
+                  }
+                ]
+              },
+              {
+                "name": "roles",
+                "protocol": "openid-connect",
+                "protocolMappers": [
+                  {
+                    "name": "realm roles",
+                    "protocol": "openid-connect",
+                    "protocolMapper": "oidc-usermodel-realm-role-mapper",
+                    "config": {
+                      "userinfo.token.claim": "true",
+                      "multivalued": "true",
+                      "id.token.claim": "true",
+                      "access.token.claim": "true",
+                      "claim.name": "realm_access.roles"
+                    }
+                  }
+                ]
               }
             ]
           }
