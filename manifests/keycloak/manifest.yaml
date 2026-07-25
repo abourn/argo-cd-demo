@@ -27,8 +27,7 @@ data:
       "enabled": true,
       "accessTokenLifespan": 900,
       "refreshTokenMaxReuse": 0,
-      "revokeRefreshToken": false,
-      "refreshTokenMaxLifespan": 7776000,
+      "revokeRefreshToken": false,            
       "defaultRoles": ["offline_access", "uma_authorization"],
       "roles": {
         "realm": [
