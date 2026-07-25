@@ -3,6 +3,8 @@ command:
   - "start"
   - "--http-port=8080"
   - "--hostname-strict=false"
+  - "--import-realm"
+
 extraEnv: |
   - name: KEYCLOAK_ADMIN
     value: admin
