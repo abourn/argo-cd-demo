@@ -108,6 +108,7 @@ extraManifests:
                 "directAccessGrantsEnabled": false,
                 "protocol": "openid-connect",
                 "defaultClientScopes": [
+                  "openid",
                   "email",
                   "profile",
                   "roles",
