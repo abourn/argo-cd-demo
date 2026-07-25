@@ -9321,7 +9321,6 @@ metadata:
     # We don't set this for nlb, per the contour docs.
     service.beta.kubernetes.io/aws-load-balancer-backend-protocol: tcp
 spec:
-  externalTrafficPolicy: "Local"
   clusterIP: "10.96.200.1"
   sessionAffinity: None
   ports:
