@@ -11,3 +11,116 @@ extraEnv: |
   - name: JAVA_OPTS_APPEND
     value: >-
       -Djgroups.dns.query={{ include "keycloak.fullname" . }}-headless
+
+extraVolumes: |
+  - name: realm-config
+    configMap:
+      name: keycloak-realm
+
+extraVolumeMounts: |
+  - name: realm-config
+    mountPath: /opt/keycloak/data/import
+    readOnly: true
+
+extraManifests: 
+  - |
+      apiVersion: v1
+      kind: ConfigMap
+      metadata:
+        name: keycloak-realm
+      data:
+        realm.json: |
+          {
+            "realm": "argocd",
+            "id": "argocd",
+            "enabled": true,
+            "accessTokenLifespan": 900,
+            "refreshTokenMaxReuse": 0,
+            "revokeRefreshToken": false,
+            "refreshTokenMaxLifespan": 7776000,
+            "defaultRoles": ["offline_access", "uma_authorization"],
+            "roles": {
+              "realm": [
+                {
+                  "name": "admin",
+                  "description": "Admin role for ArgoCD"
+                },
+                {
+                  "name": "developer",
+                  "description": "Developer role for ArgoCD"
+                }
+              ]
+            },
+            "groups": [
+              {
+                "name": "argocd-admin",
+                "realmRoles": ["admin"]
+              },
+              {
+                "name": "argocd-dev",
+                "realmRoles": ["developer"]
+              }
+            ],
+            "users": [
+              {
+                "username": "demo-user",
+                "email": "demo@example.com",
+                "enabled": true,
+                "credentials": [
+                  {
+                    "type": "password",
+                    "value": "password123"
+                  }
+                ],
+                "groups": ["argocd-admin"]
+              }
+            ],
+            "clients": [
+              {
+                "clientId": "argocd",
+                "name": "ArgoCD",
+                "enabled": true,
+                "clientAuthenticatorType": "client-secret",
+                "secret": "CHANGE_ME_TO_SECURE_SECRET",
+                "redirectUris": [
+                  "http://localhost:8080/auth/callback"
+                ],
+                "webOrigins": [
+                  "http://localhost:8080"
+                ],
+                "publicClient": false,
+                "standardFlowEnabled": true,
+                "implicitFlowEnabled": false,
+                "directAccessGrantsEnabled": false,
+                "protocol": "openid-connect",
+                "defaultClientScopes": [
+                  "email",
+                  "profile",
+                  "roles",
+                  "groups"
+                ],
+                "optionalClientScopes": [
+                  "address",
+                  "phone"
+                ]
+              }
+            ],
+            "clientScopes": [
+              {
+                "name": "groups",
+                "protocol": "openid-connect",
+                "protocolMappers": [
+                  {
+                    "name": "groups",
+                    "protocol": "openid-connect",
+                    "protocolMapper": "oidc-usermodel-realm-role-mapper",
+                    "consentRequired": false,
+                    "config": {
+                      "claim.name": "groups",
+                      "access.token.claim": "true"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
