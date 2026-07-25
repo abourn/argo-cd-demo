@@ -1,1 +1,6 @@
-# A placeholder for Prometheus settings
+server:
+  ingress:
+    enabled: true
+    ingressClassName: contour
+    hosts:
+      - prometheus.local
