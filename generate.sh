@@ -1,7 +1,9 @@
 #!/bin/bash
 echo "Generating ArgoCD manifests..."
-
 helm template -n argocd argocd ./charts/argo-cd --values ./values/argo-cd/values.yaml > ./manifests/argo-cd/manifest.yaml
+
+echo "Generating Contour manifests..."
+helm template -n contour contour ./charts/contour --values ./values/contour/values.yaml > ./manifests/contour/manifest.yaml
 
 echo "Generating Prometheus manifests..."
 helm template -n prometheus prometheus ./charts/prometheus --values ./values/prometheus/values.yaml > ./manifests/prometheus/manifest.yaml
