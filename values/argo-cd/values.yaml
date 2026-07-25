@@ -7,7 +7,7 @@ configs:
     # OIDC configuration for Keycloak
     oidc.config: |
       name: Keycloak
-      issuer: http://keycloak-keycloakx-http.keycloak.svc.cluster.local:9000/realms/argocd
+      issuer: http://keycloak-keycloakx-http.keycloak.svc.cluster.local/auth/realms/argocd
       clientID: argocd
       clientSecret: $oidc.keycloak.clientSecret
       requestedScopes: ["openid", "profile", "email", "groups"]

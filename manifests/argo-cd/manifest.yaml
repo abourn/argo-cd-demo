@@ -396,7 +396,7 @@ data:
   exec.enabled: "false"
   oidc.config: |
     name: Keycloak
-    issuer: http://keycloak-keycloakx-http.keycloak.svc.cluster.local:9000/realms/argocd
+    issuer: http://keycloak-keycloakx-http.keycloak.svc.cluster.local/auth/realms/argocd
     clientID: argocd
     clientSecret: $oidc.keycloak.clientSecret
     requestedScopes: ["openid", "profile", "email", "groups"]
@@ -32684,7 +32684,7 @@ spec:
     metadata:
       annotations:
         checksum/cmd-params: 99bd0968d55608c848007c89ff0e0f1ddebd8834b5d08d53d67c5ff38ab46d46
-        checksum/cm: a8df6aa8b8982aa645c68550c24c167aa0af27e8d314f6d9c4b1731a53e1b3ee
+        checksum/cm: c053466f6e9eb3e0d9d22c75e2df85f430685ac5f16ccbf5c6d772992fd82828
       labels:
         helm.sh/chart: argo-cd-10.1.4
         app.kubernetes.io/name: argocd-repo-server
@@ -33112,7 +33112,7 @@ spec:
     metadata:
       annotations:
         checksum/cmd-params: 99bd0968d55608c848007c89ff0e0f1ddebd8834b5d08d53d67c5ff38ab46d46
-        checksum/cm: a8df6aa8b8982aa645c68550c24c167aa0af27e8d314f6d9c4b1731a53e1b3ee
+        checksum/cm: c053466f6e9eb3e0d9d22c75e2df85f430685ac5f16ccbf5c6d772992fd82828
       labels:
         helm.sh/chart: argo-cd-10.1.4
         app.kubernetes.io/name: argocd-server
@@ -33821,7 +33821,7 @@ spec:
     metadata:
       annotations:
         checksum/cmd-params: 99bd0968d55608c848007c89ff0e0f1ddebd8834b5d08d53d67c5ff38ab46d46
-        checksum/cm: a8df6aa8b8982aa645c68550c24c167aa0af27e8d314f6d9c4b1731a53e1b3ee
+        checksum/cm: c053466f6e9eb3e0d9d22c75e2df85f430685ac5f16ccbf5c6d772992fd82828
       labels:
         helm.sh/chart: argo-cd-10.1.4
         app.kubernetes.io/name: argocd-application-controller
