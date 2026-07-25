@@ -1,3 +1,4 @@
 envoy:
   service:
-    ip: 10.96.200.1
+    type: ClusterIP
+    clusterIP: 10.96.200.1

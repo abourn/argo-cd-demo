@@ -9322,21 +9322,24 @@ metadata:
     service.beta.kubernetes.io/aws-load-balancer-backend-protocol: tcp
 spec:
   externalTrafficPolicy: "Local"
+  clusterIP: "10.96.200.1"
   sessionAffinity: None
   ports:
     - name: http
       port: 80
       protocol: TCP
       targetPort: http
+      nodePort: null
     - name: https
       port: 443
       protocol: TCP
       targetPort: https
+      nodePort: null
   selector:
     app.kubernetes.io/instance: contour
     app.kubernetes.io/name: contour
     app.kubernetes.io/component: envoy
-  type: LoadBalancer
+  type: ClusterIP
 
 ---
 # Source: contour/templates/envoy/daemonset.yaml
