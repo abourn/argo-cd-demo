@@ -370,6 +370,9 @@ metadata:
     app.kubernetes.io/part-of: argocd
     app.kubernetes.io/version: "v3.4.5"
 type: Opaque
+# Setting a blank data again will wipe admin password/key/cert
+data:
+  oidc.keycloak.clientSecret: Q0hBTkdFX01FX1RPX1NFQ1VSRV9TRUNSRVQ=
 
 ---
 # Source: argo-cd/templates/argocd-configs/argocd-cm.yaml
@@ -391,6 +394,13 @@ data:
   application.instanceLabelKey: argocd.argoproj.io/instance
   application.sync.impersonation.enabled: "false"
   exec.enabled: "false"
+  oidc.config: |
+    name: Keycloak
+    issuer: http://keycloak-keycloakx-http.keycloak.svc.cluster.local:9000/realms/argocd
+    clientID: argocd
+    clientSecret: $oidc.keycloak.clientSecret
+    requestedScopes: ["openid", "profile", "email", "groups"]
+    refreshTokenThreshold: 2m
   resource.customizations.ignoreResourceUpdates.ConfigMap: |
     jqPathExpressions:
       # Ignore the cluster-autoscaler status
@@ -488,7 +498,7 @@ data:
   timeout.hard.reconciliation: 0s
   timeout.reconciliation: 120s
   timeout.reconciliation.jitter: 60s
-  url: https://argocd.example.com
+  url: https://localhost:8080
 
 ---
 # Source: argo-cd/templates/argocd-configs/argocd-cmd-params-cm.yaml
@@ -559,7 +569,7 @@ metadata:
     app.kubernetes.io/version: "v3.4.5"
 data:
   context: |
-    argocdUrl: https://argocd.example.com
+    argocdUrl: https://localhost:8080
 
 ---
 # Source: argo-cd/templates/argocd-configs/argocd-rbac-cm.yaml
@@ -577,8 +587,10 @@ metadata:
     app.kubernetes.io/part-of: argocd
     app.kubernetes.io/version: "v3.4.5"
 data:
-  policy.csv: ""
-  policy.default: ""
+  policy.csv: |
+    g, argocd-admin, role:admin
+    g, argocd-dev, role:readonly
+  policy.default: role:readonly
   policy.matchMode: glob
   scopes: '[groups]'
 
@@ -32672,7 +32684,7 @@ spec:
     metadata:
       annotations:
         checksum/cmd-params: 99bd0968d55608c848007c89ff0e0f1ddebd8834b5d08d53d67c5ff38ab46d46
-        checksum/cm: a069c6e1f8073369af2b0b2de9c22e816a5a5aa0288c7a6fb3c9006cd6d82f47
+        checksum/cm: a8df6aa8b8982aa645c68550c24c167aa0af27e8d314f6d9c4b1731a53e1b3ee
       labels:
         helm.sh/chart: argo-cd-10.1.4
         app.kubernetes.io/name: argocd-repo-server
@@ -33100,7 +33112,7 @@ spec:
     metadata:
       annotations:
         checksum/cmd-params: 99bd0968d55608c848007c89ff0e0f1ddebd8834b5d08d53d67c5ff38ab46d46
-        checksum/cm: a069c6e1f8073369af2b0b2de9c22e816a5a5aa0288c7a6fb3c9006cd6d82f47
+        checksum/cm: a8df6aa8b8982aa645c68550c24c167aa0af27e8d314f6d9c4b1731a53e1b3ee
       labels:
         helm.sh/chart: argo-cd-10.1.4
         app.kubernetes.io/name: argocd-server
@@ -33809,7 +33821,7 @@ spec:
     metadata:
       annotations:
         checksum/cmd-params: 99bd0968d55608c848007c89ff0e0f1ddebd8834b5d08d53d67c5ff38ab46d46
-        checksum/cm: a069c6e1f8073369af2b0b2de9c22e816a5a5aa0288c7a6fb3c9006cd6d82f47
+        checksum/cm: a8df6aa8b8982aa645c68550c24c167aa0af27e8d314f6d9c4b1731a53e1b3ee
       labels:
         helm.sh/chart: argo-cd-10.1.4
         app.kubernetes.io/name: argocd-application-controller

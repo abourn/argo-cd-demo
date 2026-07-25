@@ -1,5 +1,32 @@
 global:
   addPrometheusAnnotations: true
+  domain: localhost:8080
+
+configs:
+  cm:
+    # OIDC configuration for Keycloak
+    oidc.config: |
+      name: Keycloak
+      issuer: http://keycloak-keycloakx-http.keycloak.svc.cluster.local:9000/realms/argocd
+      clientID: argocd
+      clientSecret: $oidc.keycloak.clientSecret
+      requestedScopes: ["openid", "profile", "email", "groups"]
+      refreshTokenThreshold: 2m
+
+  # Store the Keycloak client secret
+  secret:
+    extra:
+      oidc.keycloak.clientSecret: "CHANGE_ME_TO_SECURE_SECRET"
+
+  # RBAC configuration - map groups to ArgoCD roles
+  rbac:
+    policy.csv: |
+      g, argocd-admin, role:admin
+      g, argocd-dev, role:readonly
+      
+    policy.default: role:readonly
+  
+  
 
 server:
   ingress:
