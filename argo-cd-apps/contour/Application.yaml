@@ -18,3 +18,8 @@ spec:
     syncOptions:
       - CreateNamespace=true
       - ServerSideApply=true
+  ignoreDifferences:
+  - group: apiextensions.k8s.io
+    kind: CustomResourceDefinition
+    jsonPointers:
+    - /spec/preserveUnknownFields # K8S will not persist this field, so without ignoring, ArgoCD will always report OutOfSync
