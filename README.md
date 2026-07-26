@@ -2,13 +2,13 @@
 
 A repository with configuration files to create a Kind cluster with an ArgoCD instance.
 
-Ingress to the cluster is provided through Contour.  ArgoCD authentication is provided through a locally running Keycloak instance.
-
-ArgoCD is responsible for deploying itself, Contour, Keycloak, Prometheus, and two guestbook applications in different environments.
-
 The goal of this repository is to provide an easy to use and portable demo environment for ArgoCD.  The repository emphasizes managing configuration declaratively and ensuring all Kubernetes manifest changes are easy to interpret directly in source control (i.e. fully rendered manifests are committed, rather than relying on ArgoCD itself to render manifest templates).
 
 As this environment centers around a local Kind cluster with the goal of ease of bootstrapping, there are some known tradeoffs, largely around security.  See the [Known Limitations](#known-limitations) section for more.
+
+Ingress to the cluster is provided through Contour.  ArgoCD authentication is provided through a locally running Keycloak instance.
+
+ArgoCD is responsible for deploying itself, Contour, Keycloak, Prometheus, and two guestbook applications in different environments.
 
 ## Prerequisites
 
