@@ -262,6 +262,8 @@ kind: StatefulSet
 metadata:
   name: keycloak-keycloakx
   namespace: keycloak
+  annotations:
+    checksum/extra-manifests: "b886abe7cac96f15c55e0f8df9823b5c0c0a12d9838e65d51e11b52b70d8458d"
   labels:
     helm.sh/chart: keycloakx-7.2.2
     app.kubernetes.io/name: keycloakx

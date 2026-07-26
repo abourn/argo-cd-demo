@@ -39,6 +39,9 @@ extraVolumeMounts: |
     mountPath: /opt/keycloak/data/import
     readOnly: true
 
+statefulsetAnnotations:
+  checksum/extra-manifests: "{{ .Values.extraManifests | toJson | sha256sum }}"
+
 extraManifests: 
   - |
       apiVersion: v1
