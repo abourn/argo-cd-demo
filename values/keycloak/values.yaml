@@ -13,6 +13,9 @@ ingress:
   -
     host: "keycloak.local"
     paths:
+      - path: /auth/admin/
+        pathType: Prefix
+        servicePort: http-internal
       - path: '{{ tpl .Values.http.relativePath $ | trimSuffix "/" }}/'
         pathType: Prefix
 

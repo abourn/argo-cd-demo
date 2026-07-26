@@ -414,6 +414,13 @@ spec:
     - host: "keycloak.local"
       http:
         paths:
+          - path: "/auth/admin/"
+            pathType: Prefix
+            backend:
+              service:
+                name: keycloak-keycloakx-http
+                port:
+                  name: http-internal
           - path: "/auth/"
             pathType: Prefix
             backend:
