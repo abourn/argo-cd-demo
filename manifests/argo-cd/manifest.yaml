@@ -34210,6 +34210,8 @@ metadata:
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/part-of: argocd
     app.kubernetes.io/version: "v3.4.5"
+  annotations:
+    argocd.argoproj.io/ignore-healthcheck: "true"
 spec:
   ingressClassName: contour
   rules:

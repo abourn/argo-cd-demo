@@ -397,6 +397,8 @@ kind: Ingress
 metadata:
   name: keycloak-keycloakx
   namespace: keycloak
+  annotations:
+    argocd.argoproj.io/ignore-healthcheck: "true"
   labels:
     helm.sh/chart: keycloakx-7.2.2
     app.kubernetes.io/name: keycloakx

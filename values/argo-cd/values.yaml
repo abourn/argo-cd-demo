@@ -42,6 +42,8 @@ server:
   ingress:
     enabled: true    
     ingressClassName: contour
+    annotations:
+      argocd.argoproj.io/ignore-healthcheck: "true"
   metrics:
     enabled: true
 
