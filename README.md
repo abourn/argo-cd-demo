@@ -6,6 +6,10 @@ Ingress to the cluster is provided through Contour.  ArgoCD authentication is pr
 
 ArgoCD is responsible for deploying itself, Contour, Keycloak, Prometheus, and two guestbook applications in different environments.
 
+The goal of this repository is to provide an easy to use and portable demo environment for ArgoCD.  The repository emphasizes managing configuration declaratively and ensuring all Kubernetes manifest changes are easy to interpret directly in source control (i.e. fully rendered manifests are committed, rather than relying on ArgoCD itself to render manifest templates).
+
+As this environment centers around a local Kind cluster with the goal of ease of bootstrapping, there are some known tradeoffs, largely around security.  See the [Known Limitations](#known-limitations) section for more.
+
 ## Prerequisites
 
 To work with this repository and to deploy the Kind cluster, the following tools are required.
@@ -59,7 +63,7 @@ Contour's Envoy Pod is then configured to bind to the node's port 80 and 443 (th
 
 The Contour Envoy Service is configured with a static cluster IP at `10.96.200.1`.  This then enables a `hosts{}` block to be set in a custom CoreDNS Corefile ([`cluster/coredns-cm.yaml`](cluster/coredns-cm.yaml)) which maps friendly hostnames like `argocd.local` and `keycloak.local` to this Envoy Service IP.  This allows those friendly hostnames to be resolvable inside the cluster. Envoy is an L7 proxy, so it ensures requests to specific hostnames are routed to the correct Service.
 
-Finally, the `/etc/hosts` entries mentioned in [bootstrapping](#bootstrapping) ensure that those hostnames can be resolved from the machine running Kind.
+Finally, the `/etc/hosts` entries mentioned in the [Bootstrapping](#bootstrapping) section ensure that those hostnames can be resolved from the machine running Kind.
 
 ## SSO Configuration
 
