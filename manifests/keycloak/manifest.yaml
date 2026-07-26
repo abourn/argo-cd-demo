@@ -55,6 +55,8 @@ data:
         {
           "username": "admin-user",
           "email": "admin@example.com",
+          "firstName": "Admin",
+          "lastName": "User",
           "enabled": true,
           "credentials": [
             {
@@ -67,6 +69,8 @@ data:
         {
           "username": "demo-user",
           "email": "demo@example.com",
+          "firstName": "Demo",
+          "lastName": "User",
           "enabled": true,
           "credentials": [
             {
