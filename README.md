@@ -47,7 +47,7 @@ Without the Keycloak and ArgoCD entries, when trying to perform SSO to ArgoCD, t
 
 ![ArgoCD Architecture](./assets/sync-explained.png)
 
-The above diagram explains the auto sync process of ArgoCD when changes to Kubernetes Manifests are published to source control.
+The above diagram explains the auto sync process of ArgoCD when changes to Kubernetes manifests are published to source control.
 
 ## Ingress Explained
 
