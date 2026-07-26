@@ -1,8 +1,8 @@
 # ArgoCD Demo
 
-A repository with configuration files to create a Kind cluster with an ArgoCD instance.
+This repository houses configuration files to create a Kind cluster that hosts an ArgoCD instance.
 
-The goal of this repository is to provide an easy to use and portable demo environment for ArgoCD.  The repository emphasizes managing configuration declaratively and ensuring all Kubernetes manifest changes are easy to interpret directly in source control (i.e. fully rendered manifests are committed, rather than relying on ArgoCD itself to render manifest templates).
+The goal of this repository is to provide an easy to use and portable demo environment for ArgoCD.  The repository emphasizes managing configuration declaratively and ensuring all Kubernetes manifest changes are easy to review directly in source control (i.e. fully rendered manifests are committed, rather than relying on ArgoCD itself to render manifest templates).
 
 As this environment centers around a local Kind cluster with the goal of ease of bootstrapping, there are some known tradeoffs, largely around security.  See the [Known Limitations](#known-limitations) section for more.
 
