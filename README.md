@@ -43,9 +43,9 @@ Afterwards, you should add the following entries to your `/etc/hosts` file:
 
 Without the Keycloak and ArgoCD entries, when trying to perform SSO to ArgoCD, the redirect URL will be incorrect and authentication will fail.
 
-## ArgoCD Syncs Explained
+## ArgoCD Sync Explained
 
-![ArgoCD Architecture](assets/sync-explained.png.jpg)
+![ArgoCD Architecture](./assets/sync-explained.png)
 
 The above diagram explains the auto sync process of ArgoCD when changes to Kubernetes Manifests are published to source control.
 
