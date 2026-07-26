@@ -20,7 +20,7 @@ serverFiles:
             annotations:
               description: 'ArgoCD Application Controller has not been ready for 5 minutes!'
               summary: 'ArgoCD Application Controller down'
-          - alert:
+          - alert: ArgoCDMissingMetrics
             expr: (up{app_kubernetes_io_name="argocd-server-metrics"} or up{app_kubernetes_io_name="argocd-metrics"} or up{app_kubernetes_io_name="argocd-repo-server-metrics"}) == 0
             for: 5m
             labels:

@@ -132,7 +132,7 @@ data:
         for: 5m
         labels:
           severity: page
-      - alert: null
+      - alert: ArgoCDMissingMetrics
         annotations:
           description: ArgoCD Metrics have been missing for 5 minutes!
           summary: ArgoCD metrics missing
