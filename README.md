@@ -43,6 +43,9 @@ Afterwards, you should add the following entries to your `/etc/hosts` file:
 
 Without the Keycloak and ArgoCD entries, when trying to perform SSO to ArgoCD, the redirect URL will be incorrect and authentication will fail.
 
+## ArgoCD Explained
+
+
 ## Ingress Explained
 
 Ingress is provided through Contour/Envoy.  
@@ -120,3 +123,4 @@ As this is a simple demonstration that is running in a local Kind cluster, there
 
 - ArgoCD runs in insecure mode. Moreover, TLS is not configured for the ingresses running in the cluster.
 - The Keycloak installation is purely for demonstration purposes, so the OIDC Client Secret is hardcoded in source control, as are the credentials for a demo user.
+- The Kind cluster is configured as a single node cluster.
