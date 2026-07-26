@@ -61,6 +61,17 @@ The Contour Envoy Service is configured with a static cluster IP at `10.96.200.1
 
 Finally, the `/etc/hosts` entries mentioned in [bootstrapping](#bootstrapping) ensure that those hostnames can be resolved from the machine running Kind.
 
+## SSO Configuration
+
+SSO for ArgoCD is provided by a Keycloak instance that is deployed to the same Kind cluster.  For demonstration purposes, the configuration for Keyloak is managed declaratively through a `realm.json` file that is stored as a ConfigMap and mounted to the Keycloak Pod.
+
+The configuration defines a single Keycloak Realm named `argocd`. It creates two groups named `argocd-admin` and `argocd-dev` as well as two users, `admin@example.com` and `demo@example.com`, which belong to each group, respectively.
+
+In ArgoCD's RBAC configuration, the `argocd-admin` group is mapped to the internal `admin` role. Meanwhile, the `argocd-dev` group is mapped to the internal `readonly` role.
+
+> [!WARNING]  
+> The included `realm.json` is purely for demonstration purposes and is fundamentally insecure, as it hardcodes the literal OIDC secret for the ArgoCD Application, admin credentials for Keycloak, as well as the credentials for both users. The password for both users is simply 'password123'.
+
 ## Updating Helm Charts
 
 To update the local copies of Helm charts in [charts/](./charts/), you can run `helm pull` for the relevant chart.
@@ -127,3 +138,4 @@ As this is a simple demonstration that is running in a local Kind cluster, there
 - ArgoCD runs in insecure mode. Moreover, TLS is not configured for the ingresses running in the cluster.
 - The Keycloak installation is purely for demonstration purposes, so the OIDC Client Secret is hardcoded in source control, as are the credentials for a demo user.
 - The Kind cluster is configured as a single node cluster.
+- Changes to the Keycloak realm.json require a manual restart of the Keycloak Pod in order to pick up the change.
