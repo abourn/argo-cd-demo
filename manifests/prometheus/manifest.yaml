@@ -119,9 +119,8 @@ metadata:
   namespace: prometheus
 data:
   allow-snippet-annotations: "false"
-  alerts: |
-    {}
-  groups: |
+  alerting_rules.yml: |
+    groups:
     - name: ArgoCD
       rules:
       - alert: ArgoCDControllerDown
@@ -142,6 +141,8 @@ data:
         for: 5m
         labels:
           severity: page
+  alerts: |
+    {}
   prometheus.yml: |
     global:
       evaluation_interval: 1m

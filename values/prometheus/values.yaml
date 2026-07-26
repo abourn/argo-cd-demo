@@ -9,22 +9,22 @@ server:
 
 serverFiles:
   alerting_rules.yml:
-  groups:
-    - name: ArgoCD
-      rules:
-        - alert: ArgoCDControllerDown
-          expr: kube_pod_status_ready{pod="argocd-application-controller-0", condition="true"} == 0
-          for: 5m
-          labels:
-            severity: page
-          annotations:
-            description: 'ArgoCD Application Controller has not been ready for 5 minutes!'
-            summary: 'ArgoCD Application Controller down'
-        - alert:
-          expr: (up{app_kubernetes_io_name="argocd-server-metrics"} or up{app_kubernetes_io_name="argocd-metrics"} or up{app_kubernetes_io_name="argocd-repo-server-metrics"}) == 0
-          for: 5m
-          labels:
-            severity: page
-          annotations:
-            description: 'ArgoCD Metrics have been missing for 5 minutes!'
-            summary: 'ArgoCD metrics missing'
+    groups:
+      - name: ArgoCD
+        rules:
+          - alert: ArgoCDControllerDown
+            expr: kube_pod_status_ready{pod="argocd-application-controller-0", condition="true"} == 0
+            for: 5m
+            labels:
+              severity: page
+            annotations:
+              description: 'ArgoCD Application Controller has not been ready for 5 minutes!'
+              summary: 'ArgoCD Application Controller down'
+          - alert:
+            expr: (up{app_kubernetes_io_name="argocd-server-metrics"} or up{app_kubernetes_io_name="argocd-metrics"} or up{app_kubernetes_io_name="argocd-repo-server-metrics"}) == 0
+            for: 5m
+            labels:
+              severity: page
+            annotations:
+              description: 'ArgoCD Metrics have been missing for 5 minutes!'
+              summary: 'ArgoCD metrics missing'
