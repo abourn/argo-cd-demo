@@ -119,10 +119,29 @@ metadata:
   namespace: prometheus
 data:
   allow-snippet-annotations: "false"
-  alerting_rules.yml: |
-    {}
   alerts: |
     {}
+  groups: |
+    - name: ArgoCD
+      rules:
+      - alert: ArgoCDControllerDown
+        annotations:
+          description: ArgoCD Application Controller has not been ready for 5 minutes!
+          summary: ArgoCD Application Controller down
+        expr: kube_pod_status_ready{pod="argocd-application-controller-0", condition="true"}
+          == 0
+        for: 5m
+        labels:
+          severity: page
+      - alert: null
+        annotations:
+          description: ArgoCD Metrics have been missing for 5 minutes!
+          summary: ArgoCD metrics missing
+        expr: (up{app_kubernetes_io_name="argocd-server-metrics"} or up{app_kubernetes_io_name="argocd-metrics"}
+          or up{app_kubernetes_io_name="argocd-repo-server-metrics"}) == 0
+        for: 5m
+        labels:
+          severity: page
   prometheus.yml: |
     global:
       evaluation_interval: 1m
