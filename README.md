@@ -45,7 +45,7 @@ Afterwards, you should add the following entries to your `/etc/hosts` file:
 127.0.0.1 prometheus.local
 ```
 
-Without the Keycloak and ArgoCD entries, when trying to perform SSO to ArgoCD, the redirect URL will be incorrect and authentication will fail.
+Without the Keycloak and ArgoCD entries, when trying to perform SSO to ArgoCD, the browser will not be able to resolve the redirect URLs and authentication will fail.
 
 ## ArgoCD Sync Explained
 
@@ -57,7 +57,7 @@ The above diagram explains the auto sync process of ArgoCD when changes to Kuber
 
 Ingress is provided through Contour/Envoy.  
 
-The Kind cluster is configured with `extraPortMappings` in order to map the local machine's ports 80 and 443 to the cluster's node.
+The Kind cluster is configured with `extraPortMappings` in order to map the cluster node's ports 80 and 443 to the host machine.
 
 Contour's Envoy Pod is then configured to bind to the node's port 80 and 443 (through `hostPort` on the Pod), which allows Envoy to be reached from the Kind host machine.
 
@@ -71,10 +71,10 @@ SSO for ArgoCD is provided by a Keycloak instance that is deployed to the same K
 
 The configuration defines a single Keycloak Realm named `argocd`. It creates two groups named `argocd-admin` and `argocd-dev` as well as two users, `admin@example.com` and `demo@example.com`, which belong to each group, respectively.
 
-In ArgoCD's RBAC configuration, the `argocd-admin` group is mapped to the internal `admin` role. Meanwhile, the `argocd-dev` group is mapped to the internal `readonly` role.
+In ArgoCD's RBAC configuration, the `argocd-admin` group is mapped to the ArgoCD internal `admin` role. Meanwhile, the `argocd-dev` group is mapped to the ArgoCD internal `readonly` role.
 
 > [!WARNING]  
-> The included `realm.json` is purely for demonstration purposes and is fundamentally insecure, as it hardcodes the literal OIDC secret for the ArgoCD Application, admin credentials for Keycloak, as well as the credentials for both users. The password for both users is simply 'password123'.
+> The included `realm.json` is purely for demonstration purposes and is fundamentally insecure, as it hardcodes the literal OIDC secret for the ArgoCD application, admin credentials for Keycloak, as well as the credentials for both users. The password for both users is simply 'password123'.
 
 ## Updating Helm Charts
 
