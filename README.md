@@ -142,3 +142,4 @@ As this is a simple demonstration that is running in a local Kind cluster, there
 - ArgoCD runs in insecure mode. Moreover, TLS is not configured for the ingresses running in the cluster.
 - The Keycloak installation is purely for demonstration purposes, so the OIDC Client Secret is hardcoded in source control, as are the credentials for a demo user.
 - The Kind cluster is configured as a single node cluster.
+- All ArgoCD Applications are assigned to the `default` AppProject, which would be overly permissive in a production environment
